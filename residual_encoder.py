@@ -12,14 +12,14 @@ class ResidualEncoder(torch.nn.Module):
     def __init__(self, out_channels=2):
         super(ResidualEncoder, self).__init__()
         # using a pretrained model vgg16
-        self.resnet = Vgg16(pretrained=True)
+        self.resnet = Vgg16()
 
         # convolution only adjust the width and height size
         # the b_conv4 layer use 1*1 filter
         self.b_conv4 = nn.Conv2d(512, 256, kernel_size=1, stride=1, padding=0)
 
-        assert(self.bn_4.get_shape().as_list()[1:] == [28, 28, 512])
-        assert(self.b_conv4.get_shape().as_list()[1:] == [28, 28, 256])
+        # assert(self.bn_4.get_shape().as_list()[1:] == [28, 28, 512])
+        # assert(self.b_conv4.get_shape().as_list()[1:] == [28, 28, 256])
 
         # Backward upscale layer 4
         self.b_conv4_upscale = nn.Upsample(scale_factor=2)
